@@ -8,7 +8,7 @@ export default function NavBarComponent() {
     return(
         <div className="topnav">
             <NavLink to="/">Inicio</NavLink>
-            <NavLink to="/CRUD">Manejar Calles</NavLink>
+            <NavLink to="/CRUD2">Manejar Calles</NavLink>
             <NavLink to="/visualizar">Ver Calles</NavLink>
         </div>
     );

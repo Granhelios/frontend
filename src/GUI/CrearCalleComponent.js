@@ -1,6 +1,4 @@
-/**
- * Especificamente para poder crear las calles.
- */
+
  import React, {useEffect, useState} from "react";
  import Box from '@mui/material/Box';
  import TextField from '@mui/material/TextField';
@@ -21,8 +19,7 @@ import { InputLabel } from "@material-ui/core";
     const [provinciaActual, setProvinciaActual] = useState();
     const [ciudadActual, setCiudadActual] = useState();
     const [calleActual, setCalleActual] = useState();
-     
-
+    
     const getRegiones = async () => {
         const response = await fetch(`http://backend.test/api/regiones`);
         const data = await response.json();
@@ -109,6 +106,7 @@ import { InputLabel } from "@material-ui/core";
                 sx={ style }
                 autoComplete="off"
             >
+                    <div>
                     <FormControl>
                         <InputLabel id="Regiones-Disponibles">Región</InputLabel>
                         <Select
@@ -127,7 +125,10 @@ import { InputLabel } from "@material-ui/core";
                           })}
                         </Select>
                     </FormControl>
+                    </div>
 
+
+                    <div>
                     <FormControl>
                         <InputLabel id="Provincias-Disponibles">Provincia</InputLabel>
                         <Select
@@ -144,7 +145,9 @@ import { InputLabel } from "@material-ui/core";
                           })}
                         </Select>
                     </FormControl>
+                    </div>
 
+                    <div>
                     <FormControl>
                         <InputLabel id="Ciudades-Disponibles">Ciudad</InputLabel>
                         <Select
@@ -159,7 +162,10 @@ import { InputLabel } from "@material-ui/core";
                           })}
                         </Select>
                     </FormControl>
-                   
+                    </div>
+
+                    <div>
+                    <InputLabel id="simple-nombre-calle">_</InputLabel>
                     <TextField
                       required
                       id="simple-nombre-calle"
@@ -167,8 +173,10 @@ import { InputLabel } from "@material-ui/core";
                       value={calleActual}
                       onChange={(event)=>{setCalleActual(event.target.value)}}
                     />
-
+                    </div>
+                    <div>
                     <Button variant="contained" onClick={()=>{putCalle()}}>Guardar</Button>
+                    </div>
                     
             </Box>
         </Modal>

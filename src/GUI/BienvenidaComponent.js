@@ -1,6 +1,4 @@
-/**
- * Pagina de inicio que reciba al visitante
- */
+
 import {Container, List, ListItem, Typography} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import NavBarComponent from './NavBarComponent';

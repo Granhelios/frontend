@@ -1,8 +1,3 @@
-/**
- * Esta pagina basicamente sera hacer la matriz de calles que existen en la actualidad. Probablemente redundante
- * 
- */
-
 import React, {useEffect, useState} from "react";
 import NavBarComponent from "./NavBarComponent";
 import Table from '@mui/material/Table';
@@ -26,8 +21,6 @@ export default function CallesExistentesComponent(){
         const response = await fetch(`http://backend.test/api/calle/datos`);
         const data = await response.json();
         setFilas(data);
-        //console.log(data);
-        //console.log(data.hits);
     };
 
     useEffect(()=>{

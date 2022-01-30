@@ -1,6 +1,4 @@
-/**
- * Especificamente para poder crear las calles.
- */
+
  import React, {useEffect, useState} from "react";
  import Box from '@mui/material/Box';
  import TextField from '@mui/material/TextField';
@@ -13,14 +11,17 @@
 
  export default function EditarCalle(props){
 
-    
+
+  
+
     const [regiones, setRegiones] = useState([]);
     const [proUsable, setProUsable] = useState([]);
     const [ciUsable, setCiUsable] = useState([]);
-    const [regionActual, setRegionActual] = useState( props.datosModificar[3].re_id);
-    const [provinciaActual, setProvinciaActual] = useState(props.datosModificar[2].pr_id);
-    const [ciudadActual, setCiudadActual] = useState(props.datosModificar[1].ci_id);
-    const [calleActual, setCalleActual] = useState(props.datosModificar[0].ca_nombre);
+    const [regionActual, setRegionActual] = useState();
+    const [provinciaActual, setProvinciaActual] = useState();
+    const [ciudadActual, setCiudadActual] = useState();
+    const [calleActual, setCalleActual] = useState();
+    
      
 
     const getRegiones = async () => {
@@ -47,33 +48,32 @@
 
     useEffect(()=>{
         getRegiones();
-        console.log( props.datosModificar[3] ? props.datosModificar[3].re_id : 0);
     }, []);
 
-    const putCalle = () =>{
+    const cambiarCalle = (idVariable) =>{
         const requestOptions = {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ca_nombre: calleActual, ci_id: ciudadActual })
-          };
-          fetch("http://backend.test/api/calles", requestOptions)
-            .then((response) => { 
-                if(response.status===201){   
-                    props.setSeverity('info');
-                    props.setMensaje('Calle Creada con Exito');
-                    props.setOpen(true);
-                    props.getCalles();
-                    vaciarCampos();
-                }else{
-                    props.setSeverity('error');
-                    props.setMensaje('La Calle no ha sido Creada');
-                    props.setOpen(true);
-                    props.getCalles();
-                    vaciarCampos();
-                }
-                    
-                    
-                });
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ca_nombre: calleActual, ci_id: ciudadActual })
+      };
+      fetch("http://backend.test/api/nada/${idVariable}", requestOptions)
+        .then((response) => { 
+            if(response.status===201){   
+                props.setSeverity('info');
+                props.setMensaje('Calle Modificada con Exito');
+                props.setOpen(true);
+                props.getCalles();
+                vaciarCampos();
+            }else{
+                props.setSeverity('error');
+                props.setMensaje('La Calle no ha sido Modificada');
+                props.setOpen(true);
+                props.getCalles();
+                vaciarCampos();
+            }
+                
+                
+            });
 
     }
 
@@ -111,6 +111,7 @@
                 autoComplete="off"
             >
                     <FormControl>
+                      <div>
                         <InputLabel id="Regiones-Disponibles">Región</InputLabel>
                         <Select
                           labelId="Regiones-Disponibles"
@@ -127,8 +128,11 @@
                             return <MenuItem value={reg.re_id}>{reg.re_nombre}</MenuItem>
                           })}
                         </Select>
+                        </div>
                     </FormControl>
+                    
 
+                    <div>
                     <FormControl>
                         <InputLabel id="Provincias-Disponibles">Provincia</InputLabel>
                         <Select
@@ -145,7 +149,9 @@
                           })}
                         </Select>
                     </FormControl>
+                    </div>
 
+                    <div>
                     <FormControl>
                         <InputLabel id="Ciudades-Disponibles">Ciudad</InputLabel>
                         <Select
@@ -160,7 +166,10 @@
                           })}
                         </Select>
                     </FormControl>
+                    </div>
                    
+                    <div>
+                    <InputLabel id="simple-nombre-calle">_</InputLabel>
                     <TextField
                       required
                       id="simple-nombre-calle"
@@ -168,8 +177,12 @@
                       value={calleActual}
                       onChange={(event)=>{setCalleActual(event.target.value)}}
                     />
+                    </div>
+                    
 
-                    <Button variant="contained" onClick={()=>{putCalle()}}>Guardar</Button>
+                    <div>
+                    <Button variant="contained" onClick={()=>{cambiarCalle()}}>Guardar</Button>
+                    </div>
                     
             </Box>
         </Modal>
